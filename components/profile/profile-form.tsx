@@ -6,125 +6,102 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateProfile, uploadAvatar } from "./actions";
 import { ProfileData } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import { SubmitButton } from "../submit-button";
 import baseAvatar from "../../public/base_avatar.png";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-
-const ProfileSchema = z.object({
-  full_name: z.string().min(2, "Min 2 characters").max(25, "Max 25 characters"),
-});
+import ImagePicker from "../image-picker";
+import FormLabel from "../form-label";
+import { ProfileFormValues, ProfileSchema } from "@/lib/schemas/profile";
 
 type ProfileFormProps = {
   profile: ProfileData | undefined;
 };
 
-type ProfileFormValues = z.infer<typeof ProfileSchema>;
-
-const MAX_FILE_SIZE_MB = 50;
-
 export default function ProfileForm({ profile }: ProfileFormProps) {
   const [isPending, startTransition] = useTransition();
-  const [file, setFile] = useState<File | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const [updating, setUpdating] = useState(false);
 
-  const previewURL = file ? URL.createObjectURL(file) : "";
   const router = useRouter();
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      full_name: profile?.full_name || "",
+      full_name: profile?.full_name,
     },
   });
 
-  const { isDirty } = form.formState;
+  const { formState, handleSubmit } = form;
 
-  const onSubmit = (data: ProfileFormValues) => {
-    setErrorMessage(null);
-    const formData = new FormData();
+  const onSubmit = async (data: ProfileFormValues) => {
+    try {
+      setUpdating(true);
+      const formData = new FormData();
 
-    if (file) {
-      formData.append("file", file);
-    }
+      if (avatar) {
+        formData.append("file", avatar);
 
-    startTransition(async () => {
-      if (file) {
         const { error: uploadError } = await uploadAvatar(formData);
 
         if (uploadError) {
           console.error("Upload failed:", uploadError);
         }
       }
-
-      if (isDirty) {
+      if (formState.isDirty) {
         const { error: updateError } = await updateProfile(data);
 
         if (updateError) {
           console.error("Updating profile failed:", updateError);
+          // error toast
           return;
         }
       }
-      form.reset();
-      setFile(null);
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      setUpdating(false);
+    }
+
+    startTransition(() => {
       router.refresh();
-      // success toast
-      console.log("Success updating profile");
     });
+
+    setTimeout(() => {
+      setAvatar(null);
+    }, 3000);
+    // success toast
+    console.log("Success updating profile!");
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4">
-      <Image
-        height={80}
-        width={80}
-        className="rounded-full object-cover"
-        src={previewURL ? previewURL : profile?.avatar_url || baseAvatar}
-        alt="Avatar"
-        priority
-      />
-
-      <input
-        className="mt-2"
-        type="file"
-        name="file"
-        accept="image/*"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          file &&
-            (setFile(file),
-            setErrorMessage(
-              file.size > MAX_FILE_SIZE_MB * 1024 * 1024
-                ? "File size too big!"
-                : null
-            ));
-        }}
-      />
-      {errorMessage && (
-        <p className="mt-1 text-[12px] text-red-500">{errorMessage}</p>
-      )}
-
-      <label className="block mt-2">
-        <p className="text-sm text-gray-600">Full name</p>
-
-        <input
-          type="text"
-          {...form.register("full_name")}
-          className="mt-1 w-full md:w-[300px] p-2 border rounded"
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
+      <div className="size-[100px]">
+        <ImagePicker
+          file={avatar}
+          setFile={setAvatar}
+          fallbackImage={profile?.avatar_url || baseAvatar}
         />
-        {form.formState.errors.full_name && (
-          <p className="mt-1 text-[12px] text-red-500">
-            {form.formState.errors.full_name.message}
-          </p>
-        )}
-      </label>
+      </div>
+
+      <FormLabel
+        formMethods={form}
+        name="full_name"
+        label="Full name:"
+        errorMessage={formState.errors.full_name?.message}
+        className="mt-2"
+      />
 
       <SubmitButton
         className="w-[90px] mt-2"
         type="submit"
-        disabled={isPending || !(isDirty || file) || !!errorMessage}
+        disabled={
+          updating ||
+          isPending ||
+          !formState.isValid ||
+          !(formState.isDirty || avatar)
+        }
       >
-        {isPending ? "Saving..." : "Save"}
+        {updating ? "Updating..." : "Update"}
       </SubmitButton>
     </form>
   );
