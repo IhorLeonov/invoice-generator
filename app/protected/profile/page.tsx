@@ -19,7 +19,6 @@ export default async function ProfilePage({}: ProfilePageProps) {
 
   return (
     <div>
-      <h1>Profile Page</h1>
       <ProfileForm profile={profile as ProfileData} />
     </div>
   );

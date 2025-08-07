@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateProfile, uploadAvatar } from "./actions";
 import { ProfileData } from "@/utils/types";
@@ -74,12 +73,15 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mt-4 flex flex-col items-center"
+    >
       <div className="size-[100px]">
         <ImagePicker
           file={avatar}
           setFile={setAvatar}
-          fallbackImage={profile?.avatar_url || baseAvatar}
+          fallbackImage={profile?.avatar_url || baseAvatar.src}
         />
       </div>
 

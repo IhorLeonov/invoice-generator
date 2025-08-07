@@ -1,14 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 
 type ImagePickerProps = ComponentPropsWithoutRef<"label"> & {
   file: File | null | undefined;
   setFile: (file: File) => void;
   maxFileSize?: number;
-  fallbackImage?: string | StaticImageData;
+  fallbackImage?: string;
   imageClassName?: string;
   placeholderText?: string;
 };
@@ -24,7 +24,7 @@ export default function ImagePicker({
 }: ImagePickerProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const previewURL = file ? URL.createObjectURL(file) : "";
+  const previewURL = file ? URL.createObjectURL(file) : fallbackImage;
 
   useEffect(() => {
     return () => {
@@ -59,9 +59,9 @@ export default function ImagePicker({
         }}
       />
 
-      {previewURL || fallbackImage ? (
+      {previewURL ? (
         <Image
-          src={previewURL ? previewURL : fallbackImage || ""}
+          src={previewURL}
           alt="Preview"
           className={cn("object-cover w-full h-full", imageClassName)}
           fill

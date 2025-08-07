@@ -66,4 +66,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  *:focus {
+    --tw-ring-offset-width: 0px !important;
+  }
 }

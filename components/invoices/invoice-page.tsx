@@ -1,8 +1,6 @@
 "use client";
 
 import CreateForm from "@/components/invoices/new-invoice-form";
-import PageTitle from "@/components/page-title";
-import { InvoiceDialog } from "./invoice-dialog";
 import { useState } from "react";
 import { NewInvoiceFormValues } from "@/lib/schemas/invoices";
 import { Spinner } from "../ui/spinner";
@@ -35,7 +33,6 @@ export default function NewInvoicePage({}: NewInvoicePageProps) {
 
   return (
     <div>
-      <PageTitle>New invoice</PageTitle>
       <CreateForm showSpinner={showSpinner} hideSpinner={hideSpinner} />
       <Spinner
         className="fixed top-1/2 left-1/2 -translate-1/2"
