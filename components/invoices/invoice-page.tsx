@@ -23,17 +23,9 @@ export type InvoiceData = NewInvoiceFormValues & {
 export default function NewInvoicePage({}: NewInvoicePageProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const showSpinner = () => {
-    setIsLoading(true);
-  };
-
-  const hideSpinner = () => {
-    setIsLoading(false);
-  };
-
   return (
     <div>
-      <CreateForm showSpinner={showSpinner} hideSpinner={hideSpinner} />
+      <CreateForm setIsLoading={setIsLoading} />
       <Spinner
         className="fixed top-1/2 left-1/2 -translate-1/2"
         show={isLoading}

@@ -11,6 +11,7 @@ import baseAvatar from "../../public/base_avatar.png";
 import ImagePicker from "../image-picker";
 import FormLabel from "../form-label";
 import { ProfileFormValues, ProfileSchema } from "@/lib/schemas/profile";
+import { toast } from "sonner";
 
 type ProfileFormProps = {
   profile: ProfileData | undefined;
@@ -51,7 +52,7 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
 
         if (updateError) {
           console.error("Updating profile failed:", updateError);
-          // error toast
+          toast.error("Updating profile failed");
           return;
         }
       }
@@ -63,20 +64,16 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
 
     startTransition(() => {
       router.refresh();
+      toast.success("Success updating profile!");
     });
 
     setTimeout(() => {
       setAvatar(null);
     }, 3000);
-    // success toast
-    console.log("Success updating profile!");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mt-4 flex flex-col items-center"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <div className="size-[100px]">
         <ImagePicker
           file={avatar}

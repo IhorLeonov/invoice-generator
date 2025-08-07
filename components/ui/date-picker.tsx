@@ -17,6 +17,7 @@ type DatePickerProps = {
   date: Date | undefined;
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   className?: string;
+  buttonClass?: string;
 };
 
 export function DatePicker({
@@ -24,6 +25,7 @@ export function DatePicker({
   date,
   setDate,
   className,
+  buttonClass,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -41,7 +43,7 @@ export function DatePicker({
           <Button
             variant="outline"
             id="date"
-            className="w-48 px-3 justify-between font-normal"
+            className={cn("w-48 px-3 justify-between font-normal", buttonClass)}
           >
             {date ? date.toLocaleDateString("en-US") : "Select date"}
             <ChevronDownIcon size={16} />

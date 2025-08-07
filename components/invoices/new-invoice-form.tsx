@@ -20,14 +20,12 @@ import { toast } from "sonner";
 import { InvoiceDialog } from "./invoice-dialog";
 
 type NewInvoiceFormProps = ComponentPropsWithoutRef<"form"> & {
-  showSpinner: () => void;
-  hideSpinner: () => void;
+  setIsLoading: (value: boolean) => void;
 };
 
 export default function NewInvoiceForm({
   className,
-  showSpinner,
-  hideSpinner,
+  setIsLoading,
 }: NewInvoiceFormProps) {
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [order, setOrder] = useState("1");
@@ -93,7 +91,7 @@ export default function NewInvoiceForm({
     };
 
     try {
-      showSpinner();
+      setIsLoading(true);
       const { error } = await saveInvoice(result);
 
       if (error) {
@@ -106,7 +104,7 @@ export default function NewInvoiceForm({
       console.error("Unexpected error:", error);
       toast.error("Unexpected error:");
     } finally {
-      hideSpinner();
+      setIsLoading(false);
     }
   };
 
@@ -121,7 +119,7 @@ export default function NewInvoiceForm({
     <>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn("mt-5 flex gap-4", className)}
+        className={cn("mt-5 flex max-sm:flex-col gap-4", className)}
       >
         <div className="w-full flex flex-col gap-4">
           <div className="flex gap-4 flex-wrap justify-between">
@@ -154,23 +152,23 @@ export default function NewInvoiceForm({
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 max-sm:w-full">
               <FormLabel
-                className="max-w-[192px]"
+                className="max-sm:w-full sm:max-w-[192px]"
                 formMethods={form}
                 name="invoice_number"
                 label="Invoice Number:"
                 errorMessage={form.formState.errors.invoice_number?.message}
               />
               <FormLabel
-                className="max-w-[192px]"
+                className="max-sm:w-full sm:max-w-[192px]"
                 formMethods={form}
                 name="pay_terms"
                 label="Pay Terms:"
                 errorMessage={form.formState.errors.pay_terms?.message}
               />
               <FormLabel
-                className="max-w-[192px]"
+                className="max-sm:w-full sm:max-w-[192px]"
                 formMethods={form}
                 name="po_number"
                 label="PO Number:"
@@ -255,10 +253,10 @@ export default function NewInvoiceForm({
           </div>
         </div>
 
-        <div className="flex gap-2 flex-col">
-          <div>
+        <div className="flex gap-2 flex-col max-sm:w-full">
+          <div className="max-sm:w-full">
             <p className="text-[14px] font-medium text-gray-500">Currency</p>
-            <div className="flex gap-1 mt-1">
+            <div className="flex gap-1 mt-1 max-sm:w-full">
               <Controller
                 control={form.control}
                 name="currency"
@@ -267,7 +265,7 @@ export default function NewInvoiceForm({
                     options={["USD", "EUR", "USDT"]}
                     position={field.value}
                     setPosition={(position) => field.onChange(position)}
-                    className="w-full max-w-[192px] flex"
+                    className="w-full max-sm:w-1/2 sm:max-w-[192px] flex"
                   />
                 )}
               />
@@ -279,7 +277,7 @@ export default function NewInvoiceForm({
                     options={["Tax", "VAT"]}
                     position={field.value}
                     setPosition={(position) => field.onChange(position)}
-                    className="w-full max-w-[192px] flex"
+                    className="w-full max-sm:w-1/2 sm:max-w-[192px] flex"
                   />
                 )}
               />
@@ -313,7 +311,7 @@ export default function NewInvoiceForm({
             errorMessage={form.formState.errors.tax_rate?.message}
           />
 
-          <SubmitButton className="ml-[1px] mt-2 mb-[2px] w-[192px]">
+          <SubmitButton className="ml-[1px] mt-2 max-sm:w-full mb-[2px] w-[192px]">
             Generate
           </SubmitButton>
 
