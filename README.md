@@ -4,6 +4,7 @@
 - Works across the entire [Next.js](https://nextjs.org) stack
   - App Router
   - Middleware
+  - Server Actions
   - Client
   - Server
 - supabase-ssr. A package to configure Supabase Auth to use cookies
