@@ -15,7 +15,7 @@ export default async function Home() {
           <Link className="font-medium text-blue-400" href="/sign-up">
             sign up
           </Link>{" "}
-          to create your first one!
+          to start managing your invoices!
         </p>
       </div>
     </>
