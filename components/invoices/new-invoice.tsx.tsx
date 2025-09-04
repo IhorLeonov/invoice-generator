@@ -2,23 +2,9 @@
 
 import CreateForm from "@/components/invoices/new-invoice-form";
 import { useState } from "react";
-import { NewInvoiceFormValues } from "@/lib/schemas/invoices";
 import { Spinner } from "@/components/ui/spinner";
 
 type NewInvoicePageProps = {};
-
-export type InvoiceData = NewInvoiceFormValues & {
-  logo: File | null;
-  total_data: {
-    subtotal: number;
-    discountPercent: number;
-    discountValue: number;
-    taxPercent: number;
-    taxValue: number;
-    total: number;
-    symbol: string;
-  };
-};
 
 export default function NewInvoicePage({}: NewInvoicePageProps) {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,9 +1,9 @@
 import Divider from "../divider";
 import InvoiceItem from "./Invoice-item";
-import { InvoiceData } from "./invoice-page";
+import { InvoiceDetails } from "./types";
 
 type InvoiceResultProps = {
-  invoiceData: InvoiceData;
+  invoiceData: InvoiceDetails;
 };
 
 export default function InvoiceResult({ invoiceData }: InvoiceResultProps) {

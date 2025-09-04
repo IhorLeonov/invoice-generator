@@ -1,9 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { InvoiceData } from "./invoice-page";
+import { InvoiceDetails } from "./types";
 
-export async function saveInvoice(invoice: InvoiceData) {
+export async function saveInvoice(invoice: InvoiceDetails) {
   const supabase = await createClient();
 
   const {

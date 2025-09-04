@@ -14,11 +14,12 @@ import {
   NewInvoiceFormValues,
 } from "@/lib/schemas/invoices";
 import Divider from "../divider";
-import { InvoiceData } from "./invoice-page";
+
 import { saveInvoice } from "./actions";
 import { toast } from "sonner";
 import { InvoiceDialog } from "./invoice-dialog";
 import { useRouter } from "next/navigation";
+import { InvoiceDetails } from "./types";
 
 type NewInvoiceFormProps = ComponentPropsWithoutRef<"form"> & {
   setIsLoading: (value: boolean) => void;
@@ -28,7 +29,7 @@ export default function NewInvoiceForm({
   className,
   setIsLoading,
 }: NewInvoiceFormProps) {
-  const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
+  const [invoiceData, setInvoiceData] = useState<InvoiceDetails | null>(null);
   const [order, setOrder] = useState("1");
   const [logo, setLogo] = useState<File | null>(null);
 
@@ -70,7 +71,7 @@ export default function NewInvoiceForm({
   const total = subtotal - discountValue + taxValue;
   const symbol = getCurrencySymbol(form.watch("currency"));
 
-  const onOpenDialog = (data: InvoiceData) => {
+  const onOpenDialog = (data: InvoiceDetails) => {
     setInvoiceData(data);
   };
 
@@ -79,7 +80,7 @@ export default function NewInvoiceForm({
   };
 
   const onSubmit = async (data: NewInvoiceFormValues) => {
-    const result: InvoiceData = {
+    const result: InvoiceDetails = {
       ...data,
       logo,
       total_data: {

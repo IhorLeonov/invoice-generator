@@ -9,16 +9,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { InvoiceData } from "./invoice-page";
+
 import Divider from "../divider";
 import { Download, ChevronsRight } from "lucide-react";
 import { useCallback } from "react";
 import InvoiceResult from "./invoice-result";
+import { InvoiceDetails } from "./types";
 
 type InvoiceDialogProps = {
   isOpen: boolean;
   onCloseDialog: () => void;
-  invoiceData: InvoiceData | null;
+  invoiceData: InvoiceDetails | null;
   handleResetForm: () => void;
 };
 
@@ -56,9 +57,10 @@ export function InvoiceDialog({
   return (
     <Dialog open={isOpen} onOpenChange={onCloseDialog}>
       {/* <DialogTrigger>Open</DialogTrigger> */}
-      <DialogContent>
+      <DialogContent aria-describedby="">
         <DialogHeader id="invoice-content">
           <DialogTitle>INVOICE # {invoiceData.invoice_number}</DialogTitle>
+          <DialogDescription>Details:</DialogDescription>
           <Divider className="my-1" />
 
           <InvoiceResult invoiceData={invoiceData} />
