@@ -18,6 +18,7 @@ import { InvoiceData } from "./invoice-page";
 import { saveInvoice } from "./actions";
 import { toast } from "sonner";
 import { InvoiceDialog } from "./invoice-dialog";
+import { useRouter } from "next/navigation";
 
 type NewInvoiceFormProps = ComponentPropsWithoutRef<"form"> & {
   setIsLoading: (value: boolean) => void;
@@ -30,6 +31,8 @@ export default function NewInvoiceForm({
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [order, setOrder] = useState("1");
   const [logo, setLogo] = useState<File | null>(null);
+
+  const router = useRouter();
 
   const defaultValues: NewInvoiceFormValues = {
     invoice_date: new Date(),
@@ -92,14 +95,18 @@ export default function NewInvoiceForm({
 
     try {
       setIsLoading(true);
-      const { error } = await saveInvoice(result);
+      const { error, success } = await saveInvoice(result);
 
       if (error) {
         console.error("Saving invoice failed:", error);
         toast.error(error);
         return;
       }
-      onOpenDialog(result);
+
+      if (success) {
+        onOpenDialog(result);
+        router.refresh();
+      }
     } catch (error) {
       console.error("Unexpected error:", error);
       toast.error("Unexpected error:");

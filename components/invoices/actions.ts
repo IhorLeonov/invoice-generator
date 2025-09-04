@@ -1,12 +1,9 @@
 "use server";
 
-import { ProfileSchema } from "@/lib/schemas/profile";
 import { createClient } from "@/utils/supabase/server";
 import { InvoiceData } from "./invoice-page";
 
 export async function saveInvoice(invoice: InvoiceData) {
-  //   const data = ProfileSchema.parse(formData); // if !valid throw err
-
   const supabase = await createClient();
 
   const {

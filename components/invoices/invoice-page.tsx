@@ -3,7 +3,7 @@
 import CreateForm from "@/components/invoices/new-invoice-form";
 import { useState } from "react";
 import { NewInvoiceFormValues } from "@/lib/schemas/invoices";
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "@/components/ui/spinner";
 
 type NewInvoicePageProps = {};
 
