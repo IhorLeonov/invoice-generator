@@ -74,7 +74,7 @@ export default function PricingPlan({ profile }: PricingPlanProps) {
       <h2 className="text-center text-[28px] font-semibold">Pricing plan</h2>
 
       <Elements stripe={stripePromise}>
-        <ul className="flex mt-4 gap-4">
+        <ul className="flex flex-col md:flex-row mt-4 gap-4">
           <PlanItem
             isActive={profile?.subscription === "free"}
             label="Free"
