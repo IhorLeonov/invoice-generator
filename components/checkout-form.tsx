@@ -18,8 +18,6 @@ export default function CheckoutForm({ amount }: { amount: number }) {
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log({ amount });
-
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
@@ -41,8 +39,6 @@ export default function CheckoutForm({ amount }: { amount: number }) {
     }
 
     const { error: submitError } = await elements.submit();
-
-    console.log({ DEFAULT_URL });
 
     if (submitError) {
       setErrorMessage(submitError.message);
