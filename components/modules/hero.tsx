@@ -1,4 +1,4 @@
-import Divider from "./modules/divider";
+import Divider from "./divider";
 
 export default function Hero() {
   return (

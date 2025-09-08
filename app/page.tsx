@@ -1,4 +1,4 @@
-import Hero from "@/components/hero";
+import Hero from "@/components/modules/hero";
 import Link from "next/link";
 
 export default async function Home() {
