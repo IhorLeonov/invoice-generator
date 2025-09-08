@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { InvoiceRow } from "./types";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
-import { MyPagination } from "../my-pagination";
+import { MyPagination } from "../modules/my-pagination";
 
 const PAGE_SIZE = 5;
 

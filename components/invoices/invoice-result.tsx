@@ -1,4 +1,4 @@
-import Divider from "../divider";
+import Divider from "../modules/divider";
 import InvoiceItem from "./Invoice-item";
 import { InvoiceDetails } from "./types";
 

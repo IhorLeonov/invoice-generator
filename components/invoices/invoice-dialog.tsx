@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import Divider from "../divider";
+import Divider from "../modules/divider";
 import { Download, ChevronsRight } from "lucide-react";
 import { useCallback } from "react";
 import InvoiceResult from "./invoice-result";

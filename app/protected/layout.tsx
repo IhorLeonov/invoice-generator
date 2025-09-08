@@ -1,4 +1,4 @@
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/layouts/page-header";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 

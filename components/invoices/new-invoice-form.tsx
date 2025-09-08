@@ -4,16 +4,16 @@ import { cn, getCurrencySymbol } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ComponentPropsWithoutRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import FormLabel from "../form-label";
-import { SubmitButton } from "../submit-button";
-import ImagePicker from "../image-picker";
+import FormLabel from "../modules/form-label";
+import { SubmitButton } from "../modules/submit-button";
+import ImagePicker from "../modules/image-picker";
 import { DatePicker } from "../ui/date-picker";
 import { DropdownRadio } from "../ui/dropdown-radio";
 import {
   NewInvoiceFormSchema,
   NewInvoiceFormValues,
 } from "@/lib/schemas/invoices";
-import Divider from "../divider";
+import Divider from "../modules/divider";
 
 import { saveInvoice } from "./actions";
 import { toast } from "sonner";

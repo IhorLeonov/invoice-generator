@@ -1,6 +1,7 @@
 export type ProfileData = {
+  id: string;
   avatar_url: string;
   created_at: string;
   full_name: string;
-  id: string;
+  subscription: "free" | "basic" | "pro";
 };

@@ -6,10 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { updateProfile, uploadAvatar } from "./actions";
 import { ProfileData } from "@/utils/types";
 import { useRouter } from "next/navigation";
-import { SubmitButton } from "../submit-button";
+import { SubmitButton } from "../modules/submit-button";
 import baseAvatar from "../../public/base_avatar.png";
-import ImagePicker from "../image-picker";
-import FormLabel from "../form-label";
+import ImagePicker from "../modules/image-picker";
+import FormLabel from "../modules/form-label";
 import { ProfileFormValues, ProfileSchema } from "@/lib/schemas/profile";
 import { toast } from "sonner";
 

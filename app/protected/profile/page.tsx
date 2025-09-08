@@ -1,3 +1,4 @@
+import PricingPlan from "@/components/profile/pricing-plan";
 import ProfileForm from "@/components/profile/profile-form";
 import { createClient } from "@/utils/supabase/server";
 import { ProfileData } from "@/utils/types";
@@ -20,6 +21,7 @@ export default async function ProfilePage({}: ProfilePageProps) {
   return (
     <div>
       <ProfileForm profile={profile as ProfileData} />
+      <PricingPlan profile={profile as ProfileData} />
     </div>
   );
 }

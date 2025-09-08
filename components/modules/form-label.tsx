@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef } from "react";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import ErrorMessage from "./error-message";
-import { Input, InputProps } from "./ui/input";
-import { Label } from "./ui/label";
+import { Input, InputProps } from "../ui/input";
+import { Label } from "../ui/label";
 
 type FormLabelProps<T extends FieldValues> =
   ComponentPropsWithoutRef<"label"> & {

@@ -1,11 +1,11 @@
 import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
+import { FormMessage, Message } from "@/components/modules/form-message";
+import { SubmitButton } from "@/components/modules/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
-import GoogleButton from "@/components/google-sign-in-button";
+import GoogleButton from "@/components/modules/google-sign-in-button";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
