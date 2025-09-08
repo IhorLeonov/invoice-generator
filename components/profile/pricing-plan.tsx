@@ -6,13 +6,7 @@ import Divider from "../modules/divider";
 import { Button } from "../ui/button";
 import { ProfileData } from "@/utils/types";
 
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-
-if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
-  throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
-}
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+import { useRouter } from "next/navigation";
 
 type PricingPlanProps = {
   profile: ProfileData | undefined;
@@ -32,6 +26,8 @@ export const PlanItem = ({
   benefits,
   isActive,
 }: PlanItemProps) => {
+  const router = useRouter();
+
   return (
     <li
       className={cn(
@@ -61,7 +57,11 @@ export const PlanItem = ({
         ))}
       </ul>
 
-      <Button disabled={isActive} className="mt-2 w-full">
+      <Button
+        onClick={() => router.push(`/payment?amount=${price}`)}
+        disabled={isActive}
+        className="mt-2 w-full"
+      >
         Select
       </Button>
     </li>
@@ -73,28 +73,26 @@ export default function PricingPlan({ profile }: PricingPlanProps) {
     <section id="#pricing" className="mt-8">
       <h2 className="text-center text-[28px] font-semibold">Pricing plan</h2>
 
-      <Elements stripe={stripePromise}>
-        <ul className="flex flex-col md:flex-row mt-4 gap-4">
-          <PlanItem
-            isActive={profile?.subscription === "free"}
-            label="Free"
-            price={0}
-            benefits={["10 invoices available"]}
-          />
-          <PlanItem
-            isActive={profile?.subscription === "basic"}
-            label="Basic"
-            price={0.1}
-            benefits={["25 invoices available"]}
-          />
-          <PlanItem
-            isActive={profile?.subscription === "pro"}
-            label="Pro"
-            price={1}
-            benefits={["Unlimited amount available"]}
-          />
-        </ul>
-      </Elements>
+      <ul className="flex flex-col md:flex-row mt-4 gap-4">
+        <PlanItem
+          isActive={profile?.subscription === "free"}
+          label="Free"
+          price={0}
+          benefits={["10 invoices available"]}
+        />
+        <PlanItem
+          isActive={profile?.subscription === "basic"}
+          label="Basic"
+          price={5}
+          benefits={["25 invoices available"]}
+        />
+        <PlanItem
+          isActive={profile?.subscription === "pro"}
+          label="Pro"
+          price={10}
+          benefits={["Unlimited amount available"]}
+        />
+      </ul>
     </section>
   );
 }

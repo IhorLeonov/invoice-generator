@@ -64,6 +64,7 @@ export default function ImagePicker({
           src={previewURL}
           alt="Preview"
           className={cn("object-cover w-full h-full", imageClassName)}
+          priority
           fill
         />
       ) : (

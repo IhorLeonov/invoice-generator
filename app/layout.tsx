@@ -4,13 +4,10 @@ import { Geist } from "next/font/google";
 import Link from "next/link";
 import "../globals.css";
 import Providers from "@/components/layouts/providers";
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+import { DEFAULT_URL } from "@/lib/constants";
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
+  metadataBase: new URL(DEFAULT_URL),
   title: "Invoice generator",
   description: "The fastest way to create any type of invoice",
 };
